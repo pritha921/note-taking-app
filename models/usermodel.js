@@ -18,30 +18,30 @@ const userSchema = new mongoose.Schema({
 });
 
 // Hash password before saving
-userSchema.pre('save', function(next) {
+userSchema.pre('save', async function(next) {
   const user = this;
   if (!user.isModified('password')) return next();
 
-  bcrypt.genSalt(10, (err, salt) => {
-    if (err) return next(err);
-
-    bcrypt.hash(user.password, salt, (err, hash) => {
-      if (err) return next(err);
-      user.password = hash;
-      next();
-    });
-  });
+  try {
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(user.password, salt);
+    user.password = hash;
+    next();
+  } catch (err) {
+    next(err);
+  }
 });
 
 // Method to validate password
-userSchema.methods.validatePassword = function(password, callback) {
-  bcrypt.compare(password, this.password, (err, isMatch) => {
-    if (err) return callback(err);
-    callback(null, isMatch);
-  });
+userSchema.methods.validatePassword = async function(password) {
+  try {
+    const isMatch = await bcrypt.compare(password, this.password);
+    return isMatch;
+  } catch (err) {
+    throw new Error(err);
+  }
 };
 
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
-
