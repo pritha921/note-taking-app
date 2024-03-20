@@ -10,7 +10,7 @@ router.post('/login', passport.authenticate('local', {
   failureFlash: true
 }));
 
-router.post('/notes/add', isAuthenticated, noteController.createNote);
+router.post('/notes/addNote', isAuthenticated, noteController.createNote);
 router.get('/notes', isAuthenticated, noteController.getAllNotes);
 router.put('/notes/:id', isAuthenticated, noteController.updateNote);
 router.delete('/notes/:id', isAuthenticated, noteController.deleteNote);

@@ -1,3 +1,17 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+</head>
+<body>
+    <h1>Your Notes</h1>
+    <button type="submit">Add notes</button>
+</body>
+</html> -->
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,23 +21,23 @@
 </head>
 <body>
     <h1>Your Notes</h1>
+
+    <% if (notes.length > 0) { %>
+        <ul>
+            <% notes.forEach(note => { %>
+                <li><%= note.title %>: <%= note.content %></li>
+            <% }); %>
+        </ul>
+    <% } else { %>
+        <p>No notes found.</p>
+    <% } %>
+
+    <form action="/dashboard/notes/addNote" method="GET">
+        <button type="submit">Add notes</button>
+    </form>
+    <form action="/logout" method="POST">
+        <button type="submit">Logout</button>
+    </form>
 </body>
 </html>
 
-
-    <!-- <button>Add</button> -->
-     <!-- <%= JSON.stringify(notes) %>
-    {{notes | json}} -->
-    <!-- <ul>
-        <% notes.forEach(note => { %>
-            <li>
-                <h3><%= note.title %></h3>
-                <p><%= note.content %></p>
-                <a href="/notes/<%= note._id %>/edit">Edit</a>
-                <form action="/notes/<%= note._id %>?_method=DELETE" method="POST">
-                    <button type="submit">Delete</button>
-                </form>
-            </li>
-        <% }); %>
-    </ul> -->
-    <!-- <a href="/dashboard">Back to Dashboard</a> -->
