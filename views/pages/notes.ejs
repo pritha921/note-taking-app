@@ -1,17 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notes</title>
-</head>
-<body>
-    <h1>Your Notes</h1>
-    <button type="submit">Add notes</button>
-</body>
-</html> -->
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,19 +8,27 @@
 <body>
     <h1>Your Notes</h1>
 
-    <% if (notes.length > 0) { %>
-        <ul>
-            <% notes.forEach(note => { %>
-                <li><%= note.title %>: <%= note.content %></li>
-            <% }); %>
-        </ul>
-    <% } else { %>
-        <p>No notes found.</p>
-    <% } %>
-
+    <!-- Render existing notes -->
+    <ul>
+        <% notes.forEach(note => { %>
+            <li>
+                <strong><%= note.title %></strong>: <%= note.content %>
+                <!-- Edit form -->
+                <form action="/notes/<%= note._id %>/edit" method="GET" style="display: inline;">
+                    <button type="submit">Edit</button>
+                </form>
+                <!-- Delete form -->
+                <form action="/notes/<%= note._id %>/delete" method="POST" style="display: inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        <% }); %>
+    </ul>
+     <!-- Add task button -->
     <form action="/dashboard/notes/addNote" method="GET">
         <button type="submit">Add notes</button>
     </form>
+    <!-- Logout button -->
     <form action="/logout" method="POST">
         <button type="submit">Logout</button>
     </form>

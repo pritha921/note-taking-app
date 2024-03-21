@@ -4,7 +4,9 @@ const passport = require('./config/passport');
 const flash = require('connect-flash');
 const mongoose = require('mongoose');
 const User = require('./models/usermodel');
-const noteController = require('./controllers/noteController'); // Require the noteController
+const Note = require('./models/note'); 
+
+const noteController = require('./controllers/noteController'); 
 
 const app = express();
 const port = 3000;
@@ -78,11 +80,53 @@ app.get('/dashboard/notes/addNote', (req, res) => {
 });
 
 // Note routes
-// app.post('/notes/add', noteController.createNote);
 app.post('/dashboard/notes/addNote', noteController.createNote);
 app.get('/dashboard/notes',noteController.getAllNotes);
 app.put('/notes/:id', noteController.updateNote);
 app.delete('/notes/:id', noteController.deleteNote);
+
+
+
+app.get('/notes/:id/edit', async (req, res) => {
+  try {
+      // Retrieve the note with ID=req.params.id from the database
+      const note = await Note.findById(req.params.id).exec();
+      if (!note) {
+          // If no note found with the given ID, send a 404 error
+          return res.status(404).send('Note not found');
+      }
+      // Render the editNote.ejs template with the retrieved note object
+      res.render('pages/editNote', { note: note });
+  } catch (err) {
+      // Handle any errors that occur during the query or rendering
+      console.error(err);
+      res.status(500).send('Server Error');
+  }
+});
+
+// Update note route
+app.post('/notes/:id/update', async (req, res) => {
+  try {
+    const { title, content } = req.body;
+    await Note.findByIdAndUpdate(req.params.id, { title, content });
+    res.redirect('/dashboard/notes'); // Redirect to the notes page after updating
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+});
+
+// Delete note route
+app.post('/notes/:id/delete', async (req, res) => {
+  try {
+    await Note.findByIdAndDelete(req.params.id);
+    res.redirect('/dashboard/notes'); 
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+});
+
 
 // Logout route
 app.post('/logout', (req, res) => {
