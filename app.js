@@ -86,9 +86,11 @@ app.delete('/notes/:id', noteController.deleteNote);
 
 // Logout route
 app.post('/logout', (req, res) => {
-  req.logout(); 
-  res.redirect('/'); 
+  req.logout(() => {
+    res.redirect('/'); 
+  });
 });
+
 
 // Start the server
 app.listen(port, () => {
