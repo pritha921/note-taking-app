@@ -5,6 +5,7 @@ const flash = require('connect-flash');
 const mongoose = require('mongoose');
 const User = require('./models/usermodel');
 const Note = require('./models/note'); 
+const  {isAuthenticated}  = require('./routes/authMiddleware');
 
 const noteController = require('./controllers/noteController'); 
 
@@ -18,6 +19,7 @@ mongoose.connect('mongodb+srv://prithasen006:Mymongo07@todoapi.cufbbh8.mongodb.n
     console.log("Error")
   });
 
+app.use(express.static('public'));
 app.use(express.json());
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
@@ -26,6 +28,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
+
+
+app.get('/dashboard/notes', isAuthenticated, noteController.getAllNotes);
 // Home route
 app.get('/', (req, res) => {
   res.render('pages/home');
@@ -51,7 +56,7 @@ app.get('/register', (req, res) => {
 app.post('/register', async (req, res) => {
   try {
     const { email, password, username } = req.body;
-    console.log("Prints here", email, password, username);
+    // console.log("Prints here", email, password, username);
     const user = await User.create({ email, password, username });
     req.flash('success_msg', 'You are now registered and can log in');
     res.redirect('/login');
