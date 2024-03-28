@@ -33,6 +33,33 @@
     margin: 0 10px;
 }
 
+/* Styling for login and registration page */
+
+.auth-content-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.form-box {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+.form-box h1 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+.input-field {
+    margin-bottom: 15px;
+}
+.btn-field {
+    text-align: center;
+}
+
 /* styling of notes page */
 .notes-title{
     display: flex;
@@ -47,4 +74,31 @@
 .content-container {
     padding-left: 50px;
     padding-right: 50px;
+}
+
+/* Styling for add note and edit note */
+
+.notes-content-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.notes-form-box {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+.notes-form-box h1 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+.notes-input-field {
+    margin-bottom: 15px;
+}
+.notes-btn-field {
+    text-align: center;
 }
