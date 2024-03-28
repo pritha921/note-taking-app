@@ -9,7 +9,7 @@
 .body{
     background-color: #D1B3C4;
 }
-.home-wrapper{
+.home-wrapper {
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -31,4 +31,20 @@
 
 .auth-btn button {
     margin: 0 10px;
+}
+
+/* styling of notes page */
+.notes-title{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* min-height: 50vh; */
+    margin-top: 50px;
+    margin-bottom: 50px;
+
+}
+
+.content-container {
+    padding-left: 50px;
+    padding-right: 50px;
 }
